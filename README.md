@@ -5,16 +5,15 @@
 存在问题
 	输入正确的用户名和密码后进入的博客无法进行get/post 	
 	即无法正确进行班级信息管理输入
-	(演示的时候记得进入http://localhost:8080/		
-			而不是http://localhost:8080/secured）
+	只有进入http://localhost:8080/才能成功实现通讯录功能			
 	安全认证那里按要求是输错密码则重试，重试次数多了再返回401
 解决方案
 	修改函数逻辑
 	设置计数器
 
- 终端输入
+ Linux终端输入
 gcc -o webserver http.c -lpthread -lssl -lcrypto -ljson-c
-	如果显示没有安装的话去搜索一下安装指令
+	（可能显示没有安装）
 ./webserver
 	再打开火狐浏览器输入
 	http://localhost:8080/
