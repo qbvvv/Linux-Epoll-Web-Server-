@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的博客</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            margin-top: 100px;
+        }
+
+        .search-box {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">我的博客</div>
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">联系</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>欢迎来到我的博客</h1>
+        <p>您的每日精彩内容来源。</p>
+        <button onclick="showMessage()">了解更多</button>
+    </header>
+    <div class="search-container">
+        <div class="search-box">
+            <h1>班级信息管理</h1>
+            <!-- 查询和添加表单 -->
+            <form id="studentForm">
+                <label for="key1">文件名：</label>
+                <input type="text" id="key1" name="key1" required><br><br>
+                <label for="student_id">学号：</label>
+                <input type="text" id="student_id" name="student_id" required><br><br>
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="gender">性别：</label>
+                <input type="text" id="gender" name="gender" required><br><br>
+                <label for="dorm">宿舍号：</label>
+                <input type="text" id="dorm" name="dorm" required><br><br>
+                <button type="button" onclick="submitForm('search')">查询</button>
+                <button type="button" onclick="submitForm('add')">添加</button>
+            </form>
+            <div id="result"></div>
+        </div>
+    </div>
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2>最近文章</h2>
+        <div class="post">
+            <img src="img/uestc.jpg" alt="背景图片">
+            <h3>UESTC</h3>
+            <p>电子科技大学沙河校区</p>
+        </div>
+        <div class="post">
+            <img src="img/flag.png" alt="国旗图片">
+            <h3>五星红旗</h3>
+            <p>中华人民共和国国旗</p>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 我的博客. 版权所有.</p>
+    </footer>
+    <script>
+        function showMessage() {
+            alert('感谢您的访问!');
+        }
+
+        function submitForm(action) {
+            const key1 = document.getElementById('key1').value;
+            const student_id = document.getElementById('student_id').value;
+            const name = document.getElementById('name').value;
+            const gender = document.getElementById('gender').value;
+            const dorm = document.getElementById('dorm').value;
+
+            if (key1 && student_id && name && gender && dorm) {
+                const xhr = new XMLHttpRequest();
+                const url = action === 'search' ? '/search' : '/add';
+                const params = `key1=${encodeURIComponent(key1)}&student_id=${encodeURIComponent(student_id)}&name=${encodeURIComponent(name)}&gender=${encodeURIComponent(gender)}&dorm=${encodeURIComponent(dorm)}`;
+
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        document.getElementById('result').innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send(params);
+            } else {
+                alert('请输入所有信息');
+            }
+        }
+    </script>
+    <script src="js/styles.js"></script>
+</body>
+</html>
